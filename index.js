@@ -1,5 +1,5 @@
-const sequelize = require('./config/sequelize');  // Use `require` here
-const app = require('./server');  // Use `require` here instead of `import`
+const sequelize = require('./config/sequelize'); 
+const app = require('./server'); 
 
 const PORT = process.env.PORT || 5000;
 

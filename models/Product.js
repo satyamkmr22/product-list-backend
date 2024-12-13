@@ -20,7 +20,7 @@ const Product = sequelize.define('Product', {
   },
 }, {
   tableName: 'products_obt',
-  timestamps: false, // Disable createdAt and updatedAt
+  timestamps: false, 
 });
 
 module.exports = Product;

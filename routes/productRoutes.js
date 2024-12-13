@@ -3,13 +3,36 @@ const {
   getProducts,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 } = require('../controllers/productController');
+const { authMiddleware } = require('../models/User'); // Import authMiddleware for security
 const router = express.Router();
 
-router.get('/products', getProducts);
-router.post('/products', addProduct);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
+// Public Route: Get all products (accessible by authenticated users)
+router.get('/products', authMiddleware.authenticate, getProducts);
+
+// Protected Route: Add a product (Admin only)
+router.post(
+  '/products',
+  authMiddleware.authenticate,
+  authMiddleware.authorize(['admin']),
+  addProduct
+);
+
+// Protected Route: Update a product (Admin only)
+router.put(
+  '/products/:id',
+  authMiddleware.authenticate,
+  authMiddleware.authorize(['admin']),
+  updateProduct
+);
+
+// Protected Route: Delete a product (Admin only)
+router.delete(
+  '/products/:id',
+  authMiddleware.authenticate,
+  authMiddleware.authorize(['admin']),
+  deleteProduct
+);
 
 module.exports = router;
